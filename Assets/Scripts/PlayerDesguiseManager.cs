@@ -3,18 +3,18 @@ public enum DesguiseType
 {
     None,
     Desguise,
-    Degrading
+    Degrading,
+    Dead
 }
 [RequireComponent(typeof(MeshRenderer))]
 public class PlayerDesguiseManager : MonoBehaviour
 {
     public PlayerDesguiseManager instance;
     MeshRenderer playerRenderer;
-    private DesguiseType currentDesguise = DesguiseType.None;
-    public DesguiseType CurrentDesguise => currentDesguise;
+    public DesguiseType currentDesguise = DesguiseType.None;
     float maxDesguiseDuration = 5f;
     float desguiseDuration;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Awake()
     {
         if (instance != null && instance != this)
@@ -29,11 +29,13 @@ public class PlayerDesguiseManager : MonoBehaviour
     }
     public void SetDesguiseOn()
     {
-        Debug.Log("Desguise set to Desguise");
         currentDesguise = DesguiseType.Desguise;
         desguiseDuration = maxDesguiseDuration;
-        playerRenderer.material.color = Color.blue; // Change color to green when desguise is active
 
+    }
+    public void SetDead()
+    {
+        currentDesguise = DesguiseType.Dead;
     }
     void Update()
     {
@@ -48,7 +50,7 @@ public class PlayerDesguiseManager : MonoBehaviour
                 if (desguiseDuration <= maxDesguiseDuration / 2)
                 {
                     currentDesguise = DesguiseType.Degrading;
-                    playerRenderer.material.color = Color.cyan; // Change color to yellow when desguise is about to end
+                    playerRenderer.material.color = Color.cyan;
                 }
                 break;
             case DesguiseType.Degrading:
@@ -56,8 +58,12 @@ public class PlayerDesguiseManager : MonoBehaviour
                 if (desguiseDuration <= 0)
                 {
                     currentDesguise = DesguiseType.None;
-                    playerRenderer.material.color = Color.white; // Change color back to white when desguise ends
+                    playerRenderer.material.color = Color.white;
                 }
+                break;
+            case DesguiseType.Dead:
+                playerRenderer.material.color = Color.red;
+                this.GetComponent<PlayerController>().enabled = false;
                 break;
         }
     }

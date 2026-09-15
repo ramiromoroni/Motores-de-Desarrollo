@@ -34,7 +34,6 @@ public class InteractionManager : MonoBehaviour
 
         if (context.started)
         {
-            Debug.Log("Interaction input received");
             interactionEvent.Invoke();
         }
     }
