@@ -9,16 +9,22 @@ public class PlayerController : MonoBehaviour
     private Vector3 playerVelocity;
     private bool groundedPlayer;
 
+    // Referencia a la cámara para que el movimiento sea relativo a ella
+    private Transform cameraTransform;
+
     [SerializeField] private float playerSpeed = 5.0f;
     [SerializeField] private float gravityValue = -9.81f;
 
+    // Nueva variable para que Vera gire suavemente
+    [SerializeField] private float rotationSpeed = 10f;
+
     void Start()
     {
-        // Obtenemos la referencia al componente, como pide la consigna
         controller = GetComponent<CharacterController>();
+        // Vinculamos automáticamente la Main Camera del juego
+        cameraTransform = Camera.main.transform;
     }
 
-    // Esta función recibe los datos del New Input System (fases: started, performed, cancelled)
     public void OnMove(InputAction.CallbackContext context)
     {
         moveInput = context.ReadValue<Vector2>();
@@ -26,27 +32,31 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // Verificamos si estamos tocando el piso
         groundedPlayer = controller.isGrounded;
 
         if (groundedPlayer && playerVelocity.y < 0)
         {
-            playerVelocity.y = 0f; // Reseteamos la velocidad vertical si tocamos el suelo
+            playerVelocity.y = 0f;
         }
 
-        // Creamos un vector de movimiento usando los ejes X y Z
-        Vector3 move = new Vector3(moveInput.x, 0, moveInput.y);
+        Vector3 inputDirection = new Vector3(moveInput.x, 0, moveInput.y);
 
-        // Movemos el personaje
-        controller.Move(move * Time.deltaTime * playerSpeed);
-
-        // Si hay movimiento, rotamos al personaje hacia donde camina usando transform.forward
-        if (move != Vector3.zero)
+        // Solo rotamos y movemos si estamos apretando teclas
+        if (inputDirection.magnitude >= 0.1f)
         {
-            gameObject.transform.forward = move;
+            // 1. Calculamos hacia dónde debe mirar según la cámara
+            float targetAngle = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
+
+            // 2. Rotamos al personaje suavemente (así le podés ver la nariz al darse vuelta)
+            Quaternion targetRotation = Quaternion.Euler(0f, targetAngle, 0f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+            // 3. Movemos al personaje en esa dirección
+            Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            controller.Move(moveDirection.normalized * playerSpeed * Time.deltaTime);
         }
 
-        // Aplicamos gravedad constante
+        // Aplicamos gravedad
         playerVelocity.y += gravityValue * Time.deltaTime;
         controller.Move(playerVelocity * Time.deltaTime);
     }
