@@ -9,16 +9,23 @@ public class EnemyController : MonoBehaviour
         Chasing,
         Attacking
     }
+
     [SerializeField] Rigidbody thisRigidbody;
+
     PlayerDesguiseManager playerGO;
+
     EnemyState currentState = EnemyState.Idle;
+
     [SerializeField] float enemySpeed = 5f;
     [SerializeField] float chaseTimer = 10f;
     [SerializeField] List<Transform> waypoints = new List<Transform>();
     int waypointIndex = 0;
+
     [SerializeField] Transform currentWaypoint;
     float currentChaseTime = 0f;
-    UnityEvent attackEvent;
+
+    public UnityEvent attackEvent;
+
     void Start()
     {
         thisRigidbody = GetComponent<Rigidbody>();
