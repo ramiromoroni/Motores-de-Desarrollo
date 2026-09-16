@@ -1549,9 +1549,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2937782726e041f47b3df958295178a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
-  playerSpeed: 5
+  walkSpeed: 5
+  runSpeed: 8
+  crouchSpeed: 2.5
   gravityValue: -9.81
   rotationSpeed: 5
+  normalHeight: 2
+  crouchHeight: 1
+  isRunning: 0
+  isCrouching: 0
+  currentNoiseLevel: 0
+  walkNoise: 5
+  runNoise: 10
+  crouchNoise: 1
+  idleNoise: 0
 --- !u!114 &1902582069
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1609,6 +1620,38 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 57fb9751-431b-4684-9549-c2ee0372848c
     m_ActionName: 'Player/Interact[/Keyboard/space]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1902582068}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnSprint
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: cdb073aa-a74c-4699-b804-f6f7f68f84cc
+    m_ActionName: Player/New action
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1902582068}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnCrouch
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: b20c2a9f-4416-4dd8-b507-eb8634d36a7b
+    m_ActionName: Player/New action
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
