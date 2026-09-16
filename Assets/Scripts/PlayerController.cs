@@ -79,11 +79,11 @@ public class PlayerController : MonoBehaviour
             playerVelocity.y = 0f;
         }
 
-        //  Determinar velocidad actual (Prioridad: Agacharse > Correr > Caminar)
+        // Determinar velocidad actual
         if (isCrouching)
         {
             currentSpeed = crouchSpeed;
-            isRunning = false; // Bloquea correr si estás agachado
+            isRunning = false;
         }
         else if (isRunning)
         {
@@ -96,18 +96,20 @@ public class PlayerController : MonoBehaviour
 
         Vector3 inputDirection = new Vector3(moveInput.x, 0, moveInput.y);
 
-        // Solo rotamos y movemos si estamos apretando teclas
         if (inputDirection.magnitude >= 0.1f)
         {
-            //  Calculamos hacia dónde debe mirar según la cámara
-            float targetAngle = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
+            // 1. ÁNGULO DE MOVIMIENTO (360 grados, permite ir en reversa)
+            float moveAngle = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
 
-            //  Rotamos al personaje suavemente
-            Quaternion targetRotation = Quaternion.Euler(0f, targetAngle, 0f);
+            // 2. ÁNGULO DE ROTACIÓN (El truco: usamos Mathf.Abs en la Z para que NUNCA mire hacia atrás)
+            float rotationAngle = Mathf.Atan2(inputDirection.x, Mathf.Abs(inputDirection.z)) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
+
+            // Rotamos a Vera con el ángulo "mentiroso" para que mire al frente o a los lados
+            Quaternion targetRotation = Quaternion.Euler(0f, rotationAngle, 0f);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
-            // Movemos al personaje en esa dirección usando la velocidad actual
-            Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
+            // Movemos a Vera con el ángulo real (así puede retroceder)
+            Vector3 moveDirection = Quaternion.Euler(0f, moveAngle, 0f) * Vector3.forward;
             controller.Move(moveDirection.normalized * currentSpeed * Time.deltaTime);
         }
 
