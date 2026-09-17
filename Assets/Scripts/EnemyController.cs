@@ -18,6 +18,7 @@ public class EnemyController : MonoBehaviour
 
     [SerializeField] float enemySpeed = 5f;
     [SerializeField] float chaseTimer = 10f;
+    [SerializeField] LayerMask obstacleLayers;
     [SerializeField] List<Transform> waypoints = new List<Transform>();
     int waypointIndex = 0;
 
@@ -38,17 +39,31 @@ public class EnemyController : MonoBehaviour
         if (attackEvent == null) attackEvent = new UnityEvent();
     }
 
+    //// Para que el enemigo no detecte al jugador a traves de las paredes
+    bool CanSeePlayer()
+    {
+        Vector3 directionToPlayer = playerGO.transform.position - transform.position;
+        float distanceToPlayer = directionToPlayer.magnitude;
+
+        if (Physics.Raycast(transform.position, directionToPlayer.normalized, out RaycastHit hit, distanceToPlayer, obstacleLayers))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     void OnTriggerEnter(Collider collider)
     {
         if (collider.CompareTag("Player"))
         {
             playerGO = collider.GetComponent<PlayerDesguiseManager>();
-            if (playerGO.currentDesguise != DesguiseType.Desguise)
+
+            if (playerGO.currentDesguise != DesguiseType.Desguise && CanSeePlayer())
             {
                 attackEvent.AddListener(playerGO.SetDead);
                 currentState = EnemyState.Chasing;
                 currentChaseTime = chaseTimer;
-
                 //// Yendo a posición recibida por cámara falso
                 goingToAlertPosition = false;
             }
@@ -59,6 +74,13 @@ public class EnemyController : MonoBehaviour
         //// Si el enemigo está persiguiendo directamente al jugador
         if (currentState == EnemyState.Chasing && playerGO != null && !goingToAlertPosition)
         {
+            if (!CanSeePlayer())
+            {
+                currentState = EnemyState.Idle;
+                playerGO = null;
+                return;
+            }
+
             currentChaseTime -= Time.deltaTime;
 
             if (currentChaseTime > 0)

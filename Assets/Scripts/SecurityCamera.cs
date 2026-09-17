@@ -11,6 +11,7 @@ public class SecurityCamera : MonoBehaviour
     [Header("Radio de Alerta")]
     [SerializeField] float alertRadius = 15f;
 
+    [SerializeField] LayerMask obstacleLayers;
     [SerializeField] GameSceneManager gameSceneManager;
 
     float startingRotationY;
@@ -49,6 +50,21 @@ public class SecurityCamera : MonoBehaviour
         transform.rotation = Quaternion.Euler(transform.eulerAngles.x, startingRotationY + angle, transform.eulerAngles.z);
     }
 
+    bool CanSeePlayer()
+    {
+        Vector3 directionToPlayer = playerGO.transform.position - transform.position;
+        float distanceToPlayer = directionToPlayer.magnitude;
+
+        //// Funcion debug para co´mprobar que esta porqueria funciona
+        Debug.DrawRay(transform.position, directionToPlayer.normalized * distanceToPlayer, Color.red);
+
+        if (Physics.Raycast(transform.position, directionToPlayer.normalized, out RaycastHit hit, distanceToPlayer, obstacleLayers))
+        {
+            return false;
+        }
+
+        return true;
+    }
 
     //// Funcion llamada por SecurityCameraVision cuando el jugador entra en VisionArea
     public void PlayerEnteredVision(PlayerDesguiseManager player)
@@ -77,7 +93,6 @@ public class SecurityCamera : MonoBehaviour
         Debug.Log("El jugador salió del área de visión.");
     }
 
-
     void CheckPlayer()
     {
         if (alertTriggered)
@@ -95,9 +110,13 @@ public class SecurityCamera : MonoBehaviour
             return;
         }
 
-        alertTriggered = true;
+        if (!CanSeePlayer())
+        {
+            return;
+        }
 
-        //// Alertamos a los enemigos cercanos
+        alertTriggered = true;
+        //// Alerta a los enemigos cercanos
         AlertNearbyEnemies(playerGO.transform.position);
     }
 
@@ -136,4 +155,5 @@ public class SecurityCamera : MonoBehaviour
     {
         Gizmos.DrawWireSphere(transform.position, alertRadius);
     }
+
 }
