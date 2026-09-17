@@ -140,7 +140,10 @@ public class EnemyController : MonoBehaviour
             if (Vector3.Distance(transform.position, currentWaypoint.position) < 1.5f)
             {
                 waypointIndex = (waypointIndex + 1) % waypoints.Count;
+                Debug.Log("Llegó al waypoint: " + waypointIndex);
+
                 currentWaypoint = waypoints[waypointIndex];
+                Debug.Log("Ahora va al waypoint: " + waypointIndex);
             }
             Vector3 directionToWaypoint = (currentWaypoint.position - transform.position).normalized;
             Vector3 vector3ToWaypoint = new Vector3(directionToWaypoint.x, 0, directionToWaypoint.z).normalized;
