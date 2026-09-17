@@ -69,14 +69,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    //Logica de Salto
-    public void OnJump(InputAction.CallbackContext context)
-    {
-        if (context.started && groundedPlayer && !isCrouching)
-        {
-            playerVelocity.y = 5f; // Fuerza de salto
-        }
-    }
+   
 
 
     // LÓGICA DE MOVIMIENTO 
@@ -86,7 +79,7 @@ public class PlayerController : MonoBehaviour
 
         if (groundedPlayer && playerVelocity.y < 0)
         {
-            playerVelocity.y = -2f; //te cambie el 0 por un -2 por que mi salto se trababa perdon
+            playerVelocity.y = 0f; 
         }
 
         //  Determinar velocidad actual (Prioridad: Agacharse > Correr > Caminar)
