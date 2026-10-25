@@ -8,6 +8,7 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
+    [SerializeField] private AudioSource player_steps;
 
     // Referencia a la cámara para que el movimiento sea relativo a ella
     private Transform cameraTransform;
