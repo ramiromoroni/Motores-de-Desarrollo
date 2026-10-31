@@ -11,7 +11,7 @@ public class EnemyController : MonoBehaviour
     }
 
     [SerializeField] Rigidbody thisRigidbody;
-
+    [SerializeField] Animator thisAnimator;
     PlayerDesguiseManager playerGO;
 
     EnemyState currentState = EnemyState.Idle;
@@ -36,6 +36,7 @@ public class EnemyController : MonoBehaviour
     void Start()
     {
         thisRigidbody = GetComponent<Rigidbody>();
+        thisAnimator = GetComponentInChildren<Animator>();
         if (attackEvent == null) attackEvent = new UnityEvent();
     }
 
@@ -78,6 +79,7 @@ public class EnemyController : MonoBehaviour
             {
                 currentState = EnemyState.Idle;
                 playerGO = null;
+                thisAnimator.SetBool("Running", false);
                 return;
             }
 
@@ -90,11 +92,13 @@ public class EnemyController : MonoBehaviour
                 thisRigidbody.MovePosition(transform.position + directionToPlayer * Time.deltaTime * enemySpeed);
 
                 this.transform.LookAt(new Vector3(playerGO.transform.position.x, transform.position.y, playerGO.transform.position.z));
+                thisAnimator.SetBool("Running", true);
             }
             else
             {
                 currentState = EnemyState.Idle;
                 playerGO = null;
+                thisAnimator.SetBool("Running", false);
             }
 
             return;
@@ -114,7 +118,7 @@ public class EnemyController : MonoBehaviour
                 thisRigidbody.MovePosition(transform.position + movementDirection * Time.deltaTime * enemySpeed);
 
                 this.transform.LookAt(new Vector3(alertedPosition.x, transform.position.y, alertedPosition.z));
-
+                thisAnimator.SetBool("Running", true);
                 //// Si el enemigo llegó aproximadamente a la posición alertada deja de perseguirla
                 if (Vector3.Distance(transform.position, alertedPosition) < 1f)
                 {
@@ -126,6 +130,7 @@ public class EnemyController : MonoBehaviour
             {
                 goingToAlertPosition = false;
                 currentState = EnemyState.Idle;
+                thisAnimator.SetBool("Running", false);
             }
 
             return;
@@ -134,6 +139,8 @@ public class EnemyController : MonoBehaviour
         //// Comportamiento normal de patrulla
         currentState = EnemyState.Idle;
         playerGO = null;
+        thisAnimator.SetBool("Running", false);
+        thisAnimator.SetBool("Walking", false);
         if (waypoints.Count > 0)
         {
             currentWaypoint = waypoints[waypointIndex];
@@ -149,6 +156,7 @@ public class EnemyController : MonoBehaviour
             Vector3 vector3ToWaypoint = new Vector3(directionToWaypoint.x, 0, directionToWaypoint.z).normalized;
             thisRigidbody.MovePosition(transform.position + vector3ToWaypoint * Time.deltaTime * enemySpeed);
             this.transform.LookAt(new Vector3(currentWaypoint.position.x, transform.position.y, currentWaypoint.position.z));
+            thisAnimator.SetBool("Walking", true);
         }
     }
 

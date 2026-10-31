@@ -29,15 +29,15 @@ public class PlayerController : MonoBehaviour
     [Header("Estados Públicos (Para el EnemyController)")]
     public bool isRunning = false;
     public bool isCrouching = false;
-
     private float currentSpeed;
-
+    private Actions actions;
     void Start()
     {
+
+        actions = GetComponentInChildren<Actions>();
         controller = GetComponent<CharacterController>();
         cameraTransform = Camera.main.transform;
         currentSpeed = walkSpeed;
-
         // Guardamos el centro original de la cápsula
         normalCenter = controller.center;
     }
@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
             isCrouching = true;
             controller.height = crouchHeight; // Achica la cápsula a la mitad
             controller.center = crouchCenter;
+            actions.Sitting();
         }
         if (context.canceled)
         {
@@ -69,9 +70,6 @@ public class PlayerController : MonoBehaviour
             controller.center = normalCenter;
         }
     }
-
-
-
 
     // LÓGICA DE MOVIMIENTO 
     void Update()
@@ -82,7 +80,6 @@ public class PlayerController : MonoBehaviour
         {
             playerVelocity.y = 0f;
         }
-
         //  Determinar velocidad actual (Prioridad: Agacharse > Correr > Caminar)
         if (isCrouching)
         {
@@ -113,7 +110,14 @@ public class PlayerController : MonoBehaviour
             // Movemos al personaje en esa dirección usando la velocidad actual
             Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDirection.normalized * currentSpeed * Time.deltaTime);
+            if (isRunning) actions.Run();
+            else actions.Walk();
         }
+        else
+        {
+            actions.Stay();
+        }
+
 
         // Aplicamos gravedad
         playerVelocity.y += gravityValue * Time.deltaTime;
