@@ -70,7 +70,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-   
+
 
 
     // LÓGICA DE MOVIMIENTO 
@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
 
         if (groundedPlayer && playerVelocity.y < 0)
         {
-            playerVelocity.y = 0f; 
+            playerVelocity.y = 0f;
         }
 
         //  Determinar velocidad actual (Prioridad: Agacharse > Correr > Caminar)
