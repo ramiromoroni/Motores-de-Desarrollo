@@ -10,6 +10,8 @@ public class EnemyController : MonoBehaviour
         Attacking
     }
 
+    [SerializeField] AudioSource enemyFootStep; //referencia al audio source del enemigo
+
     [SerializeField] Rigidbody thisRigidbody;
     [SerializeField] Animator thisAnimator;
     PlayerDesguiseManager playerGO;
@@ -33,11 +35,15 @@ public class EnemyController : MonoBehaviour
 
     public UnityEvent attackEvent;
 
+    //timer pasos del enemigo
+    float footstepTimer = 0f;
+
     void Start()
     {
         thisRigidbody = GetComponent<Rigidbody>();
         thisAnimator = GetComponentInChildren<Animator>();
         if (attackEvent == null) attackEvent = new UnityEvent();
+        enemyFootStep = GetComponent<AudioSource>();
     }
 
     //// Para que el enemigo no detecte al jugador a traves de las paredes
@@ -157,6 +163,15 @@ public class EnemyController : MonoBehaviour
             thisRigidbody.MovePosition(transform.position + vector3ToWaypoint * Time.deltaTime * enemySpeed);
             this.transform.LookAt(new Vector3(currentWaypoint.position.x, transform.position.y, currentWaypoint.position.z));
             thisAnimator.SetBool("Walking", true);
+
+            footstepTimer -= Time.deltaTime;
+
+            if (footstepTimer <= 0f)
+            {
+                enemyFootStep.PlayOneShot(enemyFootStep.clip);
+                footstepTimer = 1f;
+            }
+
         }
     }
 
