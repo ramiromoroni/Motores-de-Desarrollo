@@ -9191,6 +9191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GateButton
   gate: {fileID: 523479839}
+  pressSfx: {fileID: 0}
 --- !u!65 &569693533
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -18409,6 +18410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GateButton
   gate: {fileID: 578120808}
+  pressSfx: {fileID: 844734666}
 --- !u!82 &844734666
 AudioSource:
   m_ObjectHideFlags: 0
@@ -18420,7 +18422,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 7358971976806203594, guid: 3bb42cf103946954cbdd58b9f905901a, type: 2}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: 46e40a08a684f1948a0a0052eb491f1f, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
