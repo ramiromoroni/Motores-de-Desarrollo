@@ -38,12 +38,29 @@ public class EnemyController : MonoBehaviour
     //timer pasos del enemigo
     float footstepTimer = 0f;
 
+    //// Para que la musica cambie
+    [SerializeField] AdaptiveMusicManager musicManager;
+    bool directPursuitActive = false;
+
     void Start()
     {
         thisRigidbody = GetComponent<Rigidbody>();
         thisAnimator = GetComponentInChildren<Animator>();
         if (attackEvent == null) attackEvent = new UnityEvent();
         enemyFootStep = GetComponent<AudioSource>();
+        musicManager = FindFirstObjectByType<AdaptiveMusicManager>();
+    }
+
+    void EndDirectPursuit()
+    {
+        if (!directPursuitActive) return;
+
+        directPursuitActive = false;
+
+        if (musicManager != null)
+        {
+            musicManager.EndPursuit(this);
+        }
     }
 
     //// Para que el enemigo no detecte al jugador a traves de las paredes
@@ -68,11 +85,22 @@ public class EnemyController : MonoBehaviour
 
             if (playerGO.currentDesguise != DesguiseType.Desguise && CanSeePlayer())
             {
+                if (!directPursuitActive)
+                {
+                    directPursuitActive = true;
+
+                    if (musicManager != null)
+                    {
+                        musicManager.BeginPursuit(this);
+                    }
+                }
+
                 attackEvent.AddListener(playerGO.SetDead);
                 currentState = EnemyState.Chasing;
                 currentChaseTime = chaseTimer;
                 //// Yendo a posición recibida por cámara falso
                 goingToAlertPosition = false;
+
             }
         }
     }
@@ -83,6 +111,7 @@ public class EnemyController : MonoBehaviour
         {
             if (!CanSeePlayer())
             {
+                EndDirectPursuit();
                 currentState = EnemyState.Idle;
                 playerGO = null;
                 thisAnimator.SetBool("Running", false);
@@ -102,6 +131,7 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
+                EndDirectPursuit();
                 currentState = EnemyState.Idle;
                 playerGO = null;
                 thisAnimator.SetBool("Running", false);
@@ -197,12 +227,12 @@ public class EnemyController : MonoBehaviour
         Debug.Log(gameObject.name + " fue alertado de la posición del jugador.");
     }
 
-
     void OnCollisionEnter(Collision collision)
     {
         if (collision.gameObject.CompareTag("Player"))
         {
             attackEvent.Invoke();
+            EndDirectPursuit();
             currentState = EnemyState.Idle;
 
             if (playerGO != null)

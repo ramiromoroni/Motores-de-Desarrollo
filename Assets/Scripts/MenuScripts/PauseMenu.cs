@@ -8,6 +8,9 @@ public class PauseMenu : MonoBehaviour
     [Header("UI del Menú de Pausa")]
     public GameObject pauseMenuUI;
 
+    [Header("Panel de Ajustes")]
+    public GameObject settingsPanel;
+
     [Header("Configuración de Escenas")]
     public string mainMenuSceneName = "MainMenu";
 
@@ -52,6 +55,32 @@ public class PauseMenu : MonoBehaviour
 
         Time.timeScale = 1f;
         isPaused = false;
+    }
+
+    public void OpenSettings()
+    {
+        if (pauseMenuUI != null)
+        {
+            pauseMenuUI.SetActive(false);
+        }
+
+        if (settingsPanel != null)
+        {
+            settingsPanel.SetActive(true);
+        }
+    }
+
+    public void CloseSettings()
+    {
+        if (settingsPanel != null)
+        {
+            settingsPanel.SetActive(false);
+        }
+
+        if (pauseMenuUI != null)
+        {
+            pauseMenuUI.SetActive(true);
+        }
     }
 
     private void Pause()

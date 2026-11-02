@@ -13,6 +13,9 @@ public class SecurityCamera : MonoBehaviour
 
     [SerializeField] LayerMask obstacleLayers;
     [SerializeField] GameSceneManager gameSceneManager;
+    [SerializeField] AdaptiveMusicManager musicManager;
+
+    bool musicDetectionRegistered = false;
 
     float startingRotationY;
 
@@ -30,6 +33,11 @@ public class SecurityCamera : MonoBehaviour
         if (gameSceneManager == null)
         {
             gameSceneManager = FindFirstObjectByType<GameSceneManager>();
+        }
+
+        if (musicManager == null)
+        {
+            musicManager = FindFirstObjectByType<AdaptiveMusicManager>();
         }
     }
 
@@ -84,14 +92,19 @@ public class SecurityCamera : MonoBehaviour
     public void PlayerExitedVision()
     {
         playerInsideVision = false;
-
         playerGO = null;
-
         //// Para que la cámara pueda volver a alertar si el jugador vuelve a entrar sin disfraz
         alertTriggered = false;
 
+        if (musicDetectionRegistered && musicManager != null)
+        {
+            musicManager.UnregisterCameraDetection(this);
+            musicDetectionRegistered = false;
+        }
+
         Debug.Log("El jugador salió del área de visión.");
     }
+
 
     void CheckPlayer()
     {
@@ -116,6 +129,13 @@ public class SecurityCamera : MonoBehaviour
         }
 
         alertTriggered = true;
+
+        if (musicManager != null)
+        {
+            musicManager.RegisterCameraDetection(this);
+            musicDetectionRegistered = true;
+        }
+
         //// Alerta a los enemigos cercanos
         AlertNearbyEnemies(playerGO.transform.position);
     }
