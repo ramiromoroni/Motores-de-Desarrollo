@@ -43966,7 +43966,11 @@ PrefabInstance:
     - target: {fileID: 6605916200301212149, guid: c8db3b488f755604c8918f9b430ca40c, type: 3}
       propertyPath: m_Resource
       value: 
-      objectReference: {fileID: 8300000, guid: b890211b52770154ba61ed69585addfe, type: 3}
+      objectReference: {fileID: 8300000, guid: 46ad3a988f844df4e8ceb8aa7df88492, type: 3}
+    - target: {fileID: 6605916200301212149, guid: c8db3b488f755604c8918f9b430ca40c, type: 3}
+      propertyPath: MinDistance
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6605916200301212149, guid: c8db3b488f755604c8918f9b430ca40c, type: 3}
       propertyPath: m_PlayOnAwake
       value: 0
@@ -43975,6 +43979,10 @@ PrefabInstance:
       propertyPath: OutputAudioMixerGroup
       value: 
       objectReference: {fileID: 7358971976806203594, guid: 3bb42cf103946954cbdd58b9f905901a, type: 2}
+    - target: {fileID: 6605916200301212149, guid: c8db3b488f755604c8918f9b430ca40c, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
