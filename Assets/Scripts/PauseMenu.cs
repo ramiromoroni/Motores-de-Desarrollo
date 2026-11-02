@@ -14,6 +14,7 @@ public class PauseMenu : MonoBehaviour
     //Para el sonido de abrir el menu de pausa (zimerman)
     [Header("Sonido")]                 
     public AudioSource openPauseSfx;
+    public AudioSource closePauseSfx;
 
     private bool isPaused = false;
 
@@ -42,6 +43,13 @@ public class PauseMenu : MonoBehaviour
         {
             pauseMenuUI.SetActive(false);
         }
+
+        //para ejecutar el sonido al cerrar menu
+        if (closePauseSfx != null)    
+        {
+            closePauseSfx.Play();
+        }
+
         Time.timeScale = 1f;
         isPaused = false;
     }
@@ -53,7 +61,7 @@ public class PauseMenu : MonoBehaviour
             pauseMenuUI.SetActive(true);
         }
 
-        //para ejecutar el sonido
+        //para ejecutar el sonido al abrir menu
         if (openPauseSfx != null)
         {
             openPauseSfx.Play();
