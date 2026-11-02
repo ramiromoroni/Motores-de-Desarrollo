@@ -11,6 +11,10 @@ public class PauseMenu : MonoBehaviour
     [Header("Configuración de Escenas")]
     public string mainMenuSceneName = "MainMenu";
 
+    //Para el sonido de abrir el menu de pausa (zimerman)
+    [Header("Sonido")]                 
+    public AudioSource openPauseSfx;
+
     private bool isPaused = false;
 
     void Update()
@@ -48,6 +52,13 @@ public class PauseMenu : MonoBehaviour
         {
             pauseMenuUI.SetActive(true);
         }
+
+        //para ejecutar el sonido
+        if (openPauseSfx != null)
+        {
+            openPauseSfx.Play();
+        }
+
         Time.timeScale = 0f;
         isPaused = true;
     }
