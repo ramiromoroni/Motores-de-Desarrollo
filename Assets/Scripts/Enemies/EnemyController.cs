@@ -11,6 +11,18 @@ public class EnemyController : MonoBehaviour
     }
 
     [SerializeField] AudioSource enemyFootStep; //referencia al audio source del enemigo
+  
+    float footstepTimer = 0f;  //timer pasos del enemigo
+
+    //pasos del robot (rodry)
+    [Header("Footsteps")]
+    [SerializeField] float patrolStepInterval = 1.0f;  // patrullando: lento y pesado
+    [SerializeField] float chaseStepInterval = 0.5f;   // persiguiendo: más rápido
+    [SerializeField] float minPitch = 0.75f;           // grave = pesado
+    [SerializeField] float maxPitch = 0.85f;
+    [SerializeField] float patrolVolume = 0.8f;
+    [SerializeField] float chaseVolume = 1.0f;         // persiguiendo: más fuerte
+
 
     [SerializeField] Rigidbody thisRigidbody;
     [SerializeField] Animator thisAnimator;
@@ -35,8 +47,7 @@ public class EnemyController : MonoBehaviour
 
     public UnityEvent attackEvent;
 
-    //timer pasos del enemigo
-    float footstepTimer = 0f;
+  
 
     //// Para que la musica cambie
     [SerializeField] AdaptiveMusicManager musicManager;
@@ -47,7 +58,6 @@ public class EnemyController : MonoBehaviour
         thisRigidbody = GetComponent<Rigidbody>();
         thisAnimator = GetComponentInChildren<Animator>();
         if (attackEvent == null) attackEvent = new UnityEvent();
-        enemyFootStep = GetComponent<AudioSource>();
         musicManager = FindFirstObjectByType<AdaptiveMusicManager>();
     }
 
@@ -106,6 +116,8 @@ public class EnemyController : MonoBehaviour
     }
     void Update()
     {
+
+
         //// Si el enemigo está persiguiendo directamente al jugador
         if (currentState == EnemyState.Chasing && playerGO != null && !goingToAlertPosition)
         {
@@ -128,6 +140,7 @@ public class EnemyController : MonoBehaviour
 
                 this.transform.LookAt(new Vector3(playerGO.transform.position.x, transform.position.y, playerGO.transform.position.z));
                 thisAnimator.SetBool("Running", true);
+                HandleFootsteps(chaseStepInterval, chaseVolume);
             }
             else
             {
@@ -155,6 +168,7 @@ public class EnemyController : MonoBehaviour
 
                 this.transform.LookAt(new Vector3(alertedPosition.x, transform.position.y, alertedPosition.z));
                 thisAnimator.SetBool("Running", true);
+                HandleFootsteps(chaseStepInterval, chaseVolume);
                 //// Si el enemigo llegó aproximadamente a la posición alertada deja de perseguirla
                 if (Vector3.Distance(transform.position, alertedPosition) < 1f)
                 {
@@ -194,14 +208,25 @@ public class EnemyController : MonoBehaviour
             this.transform.LookAt(new Vector3(currentWaypoint.position.x, transform.position.y, currentWaypoint.position.z));
             thisAnimator.SetBool("Walking", true);
 
-            footstepTimer -= Time.deltaTime;
+            HandleFootsteps(patrolStepInterval, patrolVolume);
 
-            if (footstepTimer <= 0f)
-            {
-                enemyFootStep.PlayOneShot(enemyFootStep.clip);
-                footstepTimer = 1f;
-            }
+        }
+    }
 
+    void HandleFootsteps(float interval, float volume)
+    {
+        if (enemyFootStep == null)
+        {
+            return;
+        }
+
+        footstepTimer -= Time.deltaTime;
+
+        if (footstepTimer <= 0f)
+        {
+            enemyFootStep.pitch = Random.Range(minPitch, maxPitch);
+            enemyFootStep.PlayOneShot(enemyFootStep.clip, volume);
+            footstepTimer = interval;
         }
     }
 

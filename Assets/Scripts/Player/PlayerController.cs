@@ -135,8 +135,8 @@ public class PlayerController : MonoBehaviour
             if (isRunning) actions.Run();
             else actions.Walk();
 
-            if (groundedPlayer)                   
-            {
+           
+                Debug.Log("En el piso: " + groundedPlayer);
                 stepTimer -= Time.deltaTime;
 
                 if (stepTimer <= 0f)
@@ -144,7 +144,7 @@ public class PlayerController : MonoBehaviour
                     PlayStep();
                     stepTimer = GetStepInterval();
                 }
-            }
+            
 
         }
         else

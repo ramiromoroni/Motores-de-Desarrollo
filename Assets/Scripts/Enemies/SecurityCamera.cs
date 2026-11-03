@@ -25,6 +25,9 @@ public class SecurityCamera : MonoBehaviour
 
     bool alertTriggered = false;
 
+    //sonido de deteccion (rodry)
+    [Header("Sound")]
+    [SerializeField] AudioSource detectSfx;
 
     void Start()
     {
@@ -129,6 +132,11 @@ public class SecurityCamera : MonoBehaviour
         }
 
         alertTriggered = true;
+
+        if (detectSfx != null)  //para hacer sonar la alerta
+        {
+            detectSfx.Play();
+        }
 
         if (musicManager != null)
         {
