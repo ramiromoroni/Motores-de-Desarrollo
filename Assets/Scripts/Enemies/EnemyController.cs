@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+
 public class EnemyController : MonoBehaviour
 {
     enum EnemyState
@@ -10,11 +11,11 @@ public class EnemyController : MonoBehaviour
         Attacking
     }
 
-    [SerializeField] AudioSource enemyFootStep; //referencia al audio source del enemigo
-  
-    float footstepTimer = 0f;  //timer pasos del enemigo
+    [SerializeField] AudioSource enemyFootStep; // referencia al audio source del enemigo
 
-    //pasos del robot (rodry)
+    float footstepTimer = 0f;  // timer pasos del enemigo
+
+    // pasos del robot (rodry)
     [Header("Footsteps")]
     [SerializeField] float patrolStepInterval = 1.0f;  // patrullando: lento y pesado
     [SerializeField] float chaseStepInterval = 0.5f;   // persiguiendo: más rápido
@@ -23,6 +24,10 @@ public class EnemyController : MonoBehaviour
     [SerializeField] float patrolVolume = 0.8f;
     [SerializeField] float chaseVolume = 1.0f;         // persiguiendo: más fuerte
 
+    [Header("Configuración de Espera en Waypoints")]
+    [SerializeField] int waitWaypointIndex = 3;        // Índice del waypoint de la puerta (empezando desde 0)
+    [SerializeField] float waitTimeAtDoor = 1.0f;       // Tiempo de espera en la puerta (segundos)
+    float waitTimer = 0f;                           // Contador interno de espera
 
     [SerializeField] Rigidbody thisRigidbody;
     [SerializeField] Animator thisAnimator;
@@ -46,8 +51,6 @@ public class EnemyController : MonoBehaviour
     bool goingToAlertPosition = false;
 
     public UnityEvent attackEvent;
-
-  
 
     //// Para que la musica cambie
     [SerializeField] AdaptiveMusicManager musicManager;
@@ -110,14 +113,12 @@ public class EnemyController : MonoBehaviour
                 currentChaseTime = chaseTimer;
                 //// Yendo a posición recibida por cámara falso
                 goingToAlertPosition = false;
-
             }
         }
     }
+
     void Update()
     {
-
-
         //// Si el enemigo está persiguiendo directamente al jugador
         if (currentState == EnemyState.Chasing && playerGO != null && !goingToAlertPosition)
         {
@@ -191,17 +192,31 @@ public class EnemyController : MonoBehaviour
         playerGO = null;
         thisAnimator.SetBool("Running", false);
         thisAnimator.SetBool("Walking", false);
+
         if (waypoints.Count > 0)
         {
             currentWaypoint = waypoints[waypointIndex];
+
             if (Vector3.Distance(transform.position, currentWaypoint.position) < 1.5f)
             {
+                // Si llegó al waypoint de la puerta, se detiene y espera el tiempo configurado
+                if (waypointIndex == waitWaypointIndex && waitTimer < waitTimeAtDoor)
+                {
+                    waitTimer += Time.deltaTime;
+                    thisAnimator.SetBool("Walking", false);
+                    return;
+                }
+
+                // Resetea el timer para la próxima vuelta
+                waitTimer = 0f;
+
                 waypointIndex = (waypointIndex + 1) % waypoints.Count;
                 Debug.Log("Llegó al waypoint: " + waypointIndex);
 
                 currentWaypoint = waypoints[waypointIndex];
                 Debug.Log("Ahora va al waypoint: " + waypointIndex);
             }
+
             Vector3 directionToWaypoint = (currentWaypoint.position - transform.position).normalized;
             Vector3 vector3ToWaypoint = new Vector3(directionToWaypoint.x, 0, directionToWaypoint.z).normalized;
             thisRigidbody.MovePosition(transform.position + vector3ToWaypoint * Time.deltaTime * enemySpeed);
@@ -209,7 +224,6 @@ public class EnemyController : MonoBehaviour
             thisAnimator.SetBool("Walking", true);
 
             HandleFootsteps(patrolStepInterval, patrolVolume);
-
         }
     }
 
@@ -229,7 +243,6 @@ public class EnemyController : MonoBehaviour
             footstepTimer = interval;
         }
     }
-
 
     //// Permite que una cámara de seguridad alerte al enemigo de la posición del jugador
     public void AlertAtPosition(Vector3 position)
