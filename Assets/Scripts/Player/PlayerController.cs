@@ -9,27 +9,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 playerVelocity;
     private bool groundedPlayer;
 
-    //para los pasos (rodry)
-    [Header("Footsteps")]
-    [SerializeField] private AudioSource player_steps;
-    [SerializeField] private float walkStepInterval = 0.5f;
-    [SerializeField] private float runStepInterval = 0.3f;
-    [SerializeField] private float crouchStepInterval = 0.7f;
-    [SerializeField] private float minPitch = 1.08f;
-    [SerializeField] private float maxPitch = 1.18f;
-    [SerializeField] private float walkVolume = 0.7f;
-    [SerializeField] private float runVolume = 1.0f;
-    [SerializeField] private float crouchVolume = 0.35f;
-    [SerializeField] private float crouchMinPitch = 0.92f;
-    [SerializeField] private float crouchMaxPitch = 0.98f;
-    [SerializeField] private float runMinPitch = 1.15f;
-    [SerializeField] private float runMaxPitch = 1.28f;
-    [SerializeField] private AudioLowPassFilter stepsFilter;
-    [SerializeField] private float crouchCutoff = 1500f;  // agachada: suena apagado
-    private float stepTimer = 0f;
-
-
-
+   
 
 
     // Referencia a la cámara para que el movimiento sea relativo a ella
@@ -134,23 +114,12 @@ public class PlayerController : MonoBehaviour
             controller.Move(moveDirection.normalized * currentSpeed * Time.deltaTime);
             if (isRunning) actions.Run();
             else actions.Walk();
-
-           
-                Debug.Log("En el piso: " + groundedPlayer);
-                stepTimer -= Time.deltaTime;
-
-                if (stepTimer <= 0f)
-                {
-                    PlayStep();
-                    stepTimer = GetStepInterval();
-                }
-            
+     
 
         }
         else
         {
-            actions.Stay();
-            stepTimer = 0f;
+            actions.Stay();  
         }
 
 
@@ -159,63 +128,6 @@ public class PlayerController : MonoBehaviour
         controller.Move(playerVelocity * Time.deltaTime);
     }
 
-    private float GetStepInterval()
-    {
-        if (isCrouching)
-        {
-            return crouchStepInterval;
-        }
-        else if (isRunning)
-        {
-            return runStepInterval;
-        }
-        else
-        {
-            return walkStepInterval;
-        }
-    }
-
-    private void PlayStep()
-    {
-        if (player_steps == null)
-        {
-            return;
-        }
-
-        float volume;
-
-        if (isCrouching)
-        {
-            player_steps.pitch = Random.Range(crouchMinPitch, crouchMaxPitch);
-            volume = crouchVolume;
-
-            if (stepsFilter != null)
-            {
-                stepsFilter.cutoffFrequency = crouchCutoff;   // apaga los agudos
-            }
-        }
-        else if (isRunning)
-        {
-            player_steps.pitch = Random.Range(runMinPitch, runMaxPitch);
-            volume = runVolume;
-
-            if (stepsFilter != null)
-            {
-                stepsFilter.cutoffFrequency = 22000f;         // sin filtro
-            }
-        }
-        else
-        {
-            player_steps.pitch = Random.Range(minPitch, maxPitch);
-            volume = walkVolume;
-
-            if (stepsFilter != null)
-            {
-                stepsFilter.cutoffFrequency = 22000f;         // sin filtro
-            }
-        }
-
-        player_steps.PlayOneShot(player_steps.clip, volume);
-    }
+  
 
 }
