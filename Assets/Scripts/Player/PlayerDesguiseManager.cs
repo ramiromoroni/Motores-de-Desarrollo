@@ -12,6 +12,10 @@ public class PlayerDesguiseManager : MonoBehaviour
     public PlayerDesguiseManager instance;
     //MeshRenderer playerRenderer;
     public DesguiseType currentDesguise = DesguiseType.None;
+
+    [Header("Game Over")]
+    [SerializeField] private GameOverController gameOverController;
+
     [SerializeField] private GameObject desguiseChassis;
     [SerializeField] private SkinnedMeshRenderer desguiseRenderer;
     float maxDesguiseDuration = 5f;
@@ -34,10 +38,24 @@ public class PlayerDesguiseManager : MonoBehaviour
         currentDesguise = DesguiseType.Desguise;
         desguiseDuration = maxDesguiseDuration;
     }
+
     public void SetDead()
     {
+        if (currentDesguise == DesguiseType.Dead)
+            return;
+
         currentDesguise = DesguiseType.Dead;
+
+        if (gameOverController != null)
+        {
+            gameOverController.StartGameOver();
+        }
+        else
+        {
+            Debug.LogError("No se asignó GameOverController al PlayerDesguiseManager.");
+        }
     }
+
     void Update()
     {
         switch (currentDesguise)
