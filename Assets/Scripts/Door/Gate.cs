@@ -9,7 +9,7 @@ public class Gate : MonoBehaviour
     [SerializeField] GameObject doorCamera;        // cámara Cinemachine de la puerta (opcional)
     [SerializeField] float cameraBlendTime = 1f;   // espera a que la cámara llegue a la puerta
     [SerializeField] float cameraHoldTime = 0.7f;  // cuánto se queda mirando después de abrir
-
+    [SerializeField] PlayerController playerController; // para frenar a Vera durante la cámara
     private bool isOpen = false;
 
     public void Open()
@@ -24,6 +24,7 @@ public class Gate : MonoBehaviour
         // primero la cámara va hacia la puerta
         if (doorCamera != null)
         {
+            if (playerController != null) playerController.enabled = false; // Vera se queda quieta
             doorCamera.SetActive(true);
             yield return new WaitForSeconds(cameraBlendTime);
         }
@@ -48,6 +49,8 @@ public class Gate : MonoBehaviour
         {
             yield return new WaitForSeconds(cameraHoldTime);
             doorCamera.SetActive(false);
+            yield return new WaitForSeconds(cameraBlendTime); // espera a que la cámara vuelva a Vera
+            if (playerController != null) playerController.enabled = true; // Vera vuelve a moverse
         }
     }
 }
