@@ -11,6 +11,8 @@ public class GateButton : MonoBehaviour, Iinteractable
     [SerializeField] float pressDepth = 0.05f;           // cuánto baja
     [SerializeField] float pressDuration = 0.2f;         // cuánto tarda en bajar
 
+    [SerializeField] ParticleSystem pressParticles; // estrellitas al apretar
+
     private bool isPressed = false;
 
     void OnTriggerEnter(Collider other)
@@ -35,6 +37,7 @@ public class GateButton : MonoBehaviour, Iinteractable
         isPressed = true;
 
         if (pressSfx != null) pressSfx.Play();
+        if (pressParticles != null) pressParticles.Play();
         if (buttonTopRenderer != null) buttonTopRenderer.material.color = pressedColor;
 
         StartCoroutine(PressRoutine());
