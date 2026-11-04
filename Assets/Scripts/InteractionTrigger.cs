@@ -57,6 +57,10 @@ public class InteractionTrigger : MonoBehaviour
 
     private void EjecutarInteraccion()
     {
+        //// No permite interacciones mientras el juego está pausado
+        if (Time.timeScale == 0f)
+            return;
+
         if (interactPrompt != null)
         {
             interactPrompt.SetActive(false);
