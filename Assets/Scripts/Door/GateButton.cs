@@ -13,6 +13,7 @@ public class GateButton : MonoBehaviour, Iinteractable
 
     [SerializeField] ParticleSystem pressParticles; // estrellitas al apretar
 
+    [SerializeField] GameObject promptUI; // cartel "Press SPACE to open the door"
     private bool isPressed = false;
 
     void OnTriggerEnter(Collider other)
@@ -20,6 +21,9 @@ public class GateButton : MonoBehaviour, Iinteractable
         if (other.CompareTag("Player"))
         {
             other.GetComponent<InteractionManager>().SubscribeListener(this);
+
+            //muestro el cartel SOLO si todavía no se apretó el boton
+            if (promptUI != null && !isPressed) promptUI.SetActive(true);
         }
     }
 
@@ -28,6 +32,9 @@ public class GateButton : MonoBehaviour, Iinteractable
         if (other.CompareTag("Player"))
         {
             other.GetComponent<InteractionManager>().UnsubscribeListener(this);
+
+            // dejo de mostrar el cartel al alejarse
+            if (promptUI != null) promptUI.SetActive(false);
         }
     }
 
