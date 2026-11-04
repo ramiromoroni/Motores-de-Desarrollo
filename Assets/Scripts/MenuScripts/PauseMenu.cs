@@ -35,6 +35,7 @@ public class PauseMenu : MonoBehaviour
 
     private bool isPaused = false;
     private bool isTransitioning = false;
+    private bool gameOverActive = false;
 
     private RectTransform pauseRect;
     private CanvasGroup pauseCanvas;
@@ -99,7 +100,7 @@ public class PauseMenu : MonoBehaviour
 
     void Update()
     {
-        if (Keyboard.current == null || isTransitioning) return;
+        if (gameOverActive || Keyboard.current == null || isTransitioning) return;
 
         if (Keyboard.current.pKey.wasPressedThisFrame || Keyboard.current.escapeKey.wasPressedThisFrame)
         {
@@ -118,6 +119,22 @@ public class PauseMenu : MonoBehaviour
             }
         }
     }
+
+    //// PARA QUE NO SE USE PAUSA EN GAMEOVER
+    public void BlockPauseForGameOver()
+    {
+        gameOverActive = true;
+
+        if (pauseMenuUI != null)
+            pauseMenuUI.SetActive(false);
+
+        if (settingsPanel != null)
+            settingsPanel.SetActive(false);
+
+        if (darkOverlay != null)
+            darkOverlay.SetActive(false);
+    }
+
 
     //// ABRIR PAUSA
     private void Pause()

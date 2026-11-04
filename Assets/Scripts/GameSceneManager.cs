@@ -13,10 +13,10 @@ public class GameSceneManager : MonoBehaviour
         SceneManager.LoadScene("level1");
     }
 
-    public void LoadGameOver()
-    {
-        SceneManager.LoadScene("GameOver");
-    }
+    //public void LoadGameOver()
+    //{
+     //   SceneManager.LoadScene("GameOver");
+    //}
 
     public void LoadVictory()
     {
