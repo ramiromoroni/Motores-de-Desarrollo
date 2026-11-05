@@ -43,6 +43,7 @@ public class GateButton : MonoBehaviour, Iinteractable
         if (isPressed) return; // si ya se apretó, no hace nada
         isPressed = true;
 
+        if (promptUI != null) promptUI.SetActive(false); // escondo el cartel al apretar el botón
         if (pressSfx != null) pressSfx.Play();
         if (pressParticles != null) pressParticles.Play();
         if (buttonTopRenderer != null) buttonTopRenderer.material.color = pressedColor;
