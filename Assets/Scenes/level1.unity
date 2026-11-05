@@ -627,6 +627,14 @@ PrefabInstance:
       propertyPath: voiceData
       value: 
       objectReference: {fileID: 11400000, guid: a936b96b1749e94448a53a4dadb0e5c3, type: 2}
+    - target: {fileID: 1759068135048172939, guid: 17835fd7938593b45a60ee889ee9daa9, type: 3}
+      propertyPath: stepsSource
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3216563078054030850, guid: 17835fd7938593b45a60ee889ee9daa9, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 5226999513116481818, guid: 3bb42cf103946954cbdd58b9f905901a, type: 2}
     - target: {fileID: 6203931253389430058, guid: 17835fd7938593b45a60ee889ee9daa9, type: 3}
       propertyPath: enemyFootStep
       value: 
@@ -899,7 +907,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (2)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7394390246887550430, guid: 17835fd7938593b45a60ee889ee9daa9, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -46236,6 +46245,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1759068135048172939, guid: 17835fd7938593b45a60ee889ee9daa9, type: 3}
+      propertyPath: stepsSource
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1888897815129680009, guid: 17835fd7938593b45a60ee889ee9daa9, type: 3}
+      propertyPath: stepsSource
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3216563078054030850, guid: 17835fd7938593b45a60ee889ee9daa9, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 5226999513116481818, guid: 3bb42cf103946954cbdd58b9f905901a, type: 2}
     - target: {fileID: 6203931253389430058, guid: 17835fd7938593b45a60ee889ee9daa9, type: 3}
       propertyPath: enemyFootStep
       value: 
@@ -46500,7 +46521,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Enemy (1)
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7394390246887550430, guid: 17835fd7938593b45a60ee889ee9daa9, type: 3}
+    - {fileID: 2892316769740324777, guid: 17835fd7938593b45a60ee889ee9daa9, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
@@ -46662,6 +46685,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: '::'
   voiceData: {fileID: 0}
+  voiceSource: {fileID: 0}
 --- !u!1 &1406678693
 GameObject:
   m_ObjectHideFlags: 0
@@ -55937,6 +55961,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1759068135048172939, guid: 17835fd7938593b45a60ee889ee9daa9, type: 3}
+      propertyPath: stepsSource
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1888897815129680009, guid: 17835fd7938593b45a60ee889ee9daa9, type: 3}
+      propertyPath: stepsSource
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3216563078054030850, guid: 17835fd7938593b45a60ee889ee9daa9, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 5226999513116481818, guid: 3bb42cf103946954cbdd58b9f905901a, type: 2}
     - target: {fileID: 6203931253389430058, guid: 17835fd7938593b45a60ee889ee9daa9, type: 3}
       propertyPath: enemyFootStep
       value: 
@@ -56201,7 +56237,9 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7394390246887550430, guid: 17835fd7938593b45a60ee889ee9daa9, type: 3}
+    - {fileID: 2892316769740324777, guid: 17835fd7938593b45a60ee889ee9daa9, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
