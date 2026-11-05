@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a19c8d5181923d04799300926ddaaea6, type: 3}
+  m_Name: StoredLinesEnemy
+  m_EditorClassIdentifier: Assembly-CSharp::StoredLines
+  <Alertas>k__BackingField:
+  - {fileID: 8300000, guid: 562d3bfc18211464595d25d21dba2ba0, type: 3}
+  - {fileID: 8300000, guid: 9cdc8702230aaa44aa57b165b66aa4e1, type: 3}
+  <CamaraDetectoAlguien>k__BackingField: {fileID: 8300000, guid: aa90ecb9e4fbb0b48974d988f4255abf, type: 3}
+  <CamaraNoHayNadie>k__BackingField:
+  - {fileID: 8300000, guid: f8853e758c078814dae5b2729f0267c8, type: 3}
+  - {fileID: 8300000, guid: 7adaa6ffbf3e9b6478b02a815969cbad, type: 3}
+  <JugadorEscapo>k__BackingField: {fileID: 8300000, guid: a8e3e220d23f72242860321885fab078, type: 3}
