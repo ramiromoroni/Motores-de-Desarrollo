@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+
 public class EnemyController : MonoBehaviour
 {
     enum EnemyState
@@ -39,12 +40,18 @@ public class EnemyController : MonoBehaviour
     [SerializeField] AdaptiveMusicManager musicManager;
     bool directPursuitActive = false;
 
+    ////
+    private EnemyVoiceEmitter voiceEmitter;
+
     void Start()
     {
         thisRigidbody = GetComponent<Rigidbody>();
         thisAnimator = GetComponentInChildren<Animator>();
         if (attackEvent == null) attackEvent = new UnityEvent();
         musicManager = FindFirstObjectByType<AdaptiveMusicManager>();
+
+        //// MODIFICACIÓN DE SONIDO: Obtenemos el emisor asignado al enemigo
+        voiceEmitter = GetComponent<EnemyVoiceEmitter>();
     }
 
     void EndDirectPursuit()
@@ -91,6 +98,9 @@ public class EnemyController : MonoBehaviour
                     }
                 }
 
+                //// MODIFICACIÓN DE SONIDO: Alerta cuando ve directamente al jugador
+                if (voiceEmitter != null) voiceEmitter.PlayAlerta();
+
                 attackEvent.AddListener(playerGO.SetDead);
                 currentState = EnemyState.Chasing;
                 currentChaseTime = chaseTimer;
@@ -107,6 +117,9 @@ public class EnemyController : MonoBehaviour
         {
             if (!CanSeePlayer())
             {
+                //// MODIFICACIÓN DE SONIDO: El jugador se escapó perdiendo la línea de visión
+                if (voiceEmitter != null) voiceEmitter.PlayJugadorEscapo();
+
                 EndDirectPursuit();
                 currentState = EnemyState.Idle;
                 playerGO = null;
@@ -127,6 +140,9 @@ public class EnemyController : MonoBehaviour
             }
             else
             {
+                //// MODIFICACIÓN DE SONIDO: Se acabó el tiempo de persecución y el jugador escapó
+                if (voiceEmitter != null) voiceEmitter.PlayJugadorEscapo();
+
                 EndDirectPursuit();
                 currentState = EnemyState.Idle;
                 playerGO = null;
@@ -154,12 +170,18 @@ public class EnemyController : MonoBehaviour
                 //// Si el enemigo llegó aproximadamente a la posición alertada deja de perseguirla
                 if (Vector3.Distance(transform.position, alertedPosition) < 1f)
                 {
+                    //// MODIFICACIÓN DE SONIDO: Llegó al lugar de la cámara y no vio a nadie
+                    if (voiceEmitter != null) voiceEmitter.PlayCamaraFalsaAlarma();
+
                     goingToAlertPosition = false;
                     currentState = EnemyState.Idle;
                 }
             }
             else
             {
+                //// MODIFICACIÓN DE SONIDO: Se le acabó el tiempo buscando la alerta de la cámara y desiste
+                if (voiceEmitter != null) voiceEmitter.PlayCamaraFalsaAlarma();
+
                 goingToAlertPosition = false;
                 currentState = EnemyState.Idle;
                 thisAnimator.SetBool("Running", false);
@@ -196,6 +218,9 @@ public class EnemyController : MonoBehaviour
     //// Permite que una cámara de seguridad alerte al enemigo de la posición del jugador
     public void AlertAtPosition(Vector3 position)
     {
+        ////La cámara de seguridad le avisa que detectó a alguien
+        if (voiceEmitter != null) voiceEmitter.PlayCamaraDetecto();
+
         //// Guarda la posición donde la cámara vio al jugador
         alertedPosition = position;
 
