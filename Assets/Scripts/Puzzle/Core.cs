@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class Core : MonoBehaviour, Iinteractable
 {
-    [SerializeField] CorePuzzle puzzle;                 // el que cuenta los núcleos
-    [SerializeField] Renderer coreRenderer;             // para cambiar el color
-    [SerializeField] Color disabledColor = Color.green; // color al desactivarlo
-    [SerializeField] AudioSource disableSfx;            // sonido (opcional)
-    [SerializeField] ParticleSystem disableParticles;   // partículas (opcional)
+    [SerializeField] CorePuzzle puzzle;               // el que cuenta los núcleos
+    [SerializeField] GameObject activeModel;          // celda roja
+    [SerializeField] GameObject disabledModel;        // celda verde
+    [SerializeField] AudioSource disableSfx;          // sonido (opcional)
+    [SerializeField] ParticleSystem disableParticles; // partículas (opcional)
 
     private bool isDisabled = false;
 
@@ -27,7 +27,8 @@ public class Core : MonoBehaviour, Iinteractable
         if (isDisabled) return; // si ya se desactivó, no hace nada
         isDisabled = true;
 
-        if (coreRenderer != null) coreRenderer.material.color = disabledColor;
+        if (activeModel != null) activeModel.SetActive(false);   // escondemos la roja
+        if (disabledModel != null) disabledModel.SetActive(true); // mostramos la verde
         if (disableSfx != null) disableSfx.Play();
         if (disableParticles != null) disableParticles.Play();
 
