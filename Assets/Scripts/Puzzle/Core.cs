@@ -7,6 +7,7 @@ public class Core : MonoBehaviour, Iinteractable
     [SerializeField] GameObject disabledModel;        // celda verde
     [SerializeField] AudioSource disableSfx;          // sonido (opcional)
     [SerializeField] ParticleSystem disableParticles; // partículas (opcional)
+    [SerializeField] AudioSource idleLoop;            //el sonido que va en loop
 
     private bool isDisabled = false;
 
@@ -31,7 +32,10 @@ public class Core : MonoBehaviour, Iinteractable
         if (disabledModel != null) disabledModel.SetActive(true); // mostramos la verde
         if (disableSfx != null) disableSfx.Play();
         if (disableParticles != null) disableParticles.Play();
+        if (idleLoop != null) idleLoop.Stop();                    // detiene el loop
 
         puzzle.CoreDisabled(); // le avisa al puzzle
     }
+
+  
 }
