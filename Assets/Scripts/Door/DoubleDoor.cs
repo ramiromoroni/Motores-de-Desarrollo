@@ -3,18 +3,21 @@ using UnityEngine;
 
 public class DoubleDoor : MonoBehaviour, Iinteractable
 {
-    [SerializeField] Transform leftDoor;                   // Door_Left
-    [SerializeField] Transform rightDoor;                  // Door_Right
+    [SerializeField] Transform leftDoor;                     // Door_Left
+    [SerializeField] Transform rightDoor;                    // Door_Right
     [SerializeField] Vector3 slideDirection = Vector3.right; // hacia dónde va la puerta derecha
-    [SerializeField] float slideDistance = 1f;             // cuánto se mete cada hoja
-    [SerializeField] float openDuration = 1.5f;            // cuánto tarda en abrirse
-    [SerializeField] AudioSource openSfx;                  // sonido de la puerta (opcional)
-    [SerializeField] GameObject promptUI;                  // cartel "Press SPACE..." (opcional)
+    [SerializeField] float slideDistance = 1f;               // cuánto se mete cada hoja
+    [SerializeField] float openDuration = 1.5f;              // cuánto tarda en abrirse
+    [SerializeField] AudioSource openSfx;                    // sonido de la puerta (opcional)
+    [SerializeField] GameObject promptUI;                    // cartel "Press SPACE..." (opcional)
+    [SerializeField] bool openWithInteraction = true;        // false = solo la abre el puzzle
 
     private bool isOpen = false;
 
     void OnTriggerEnter(Collider other)
     {
+        if (!openWithInteraction) return; // si es la salida del puzzle, Space no hace nada
+
         if (other.CompareTag("Player"))
         {
             other.GetComponent<InteractionManager>().SubscribeListener(this);
@@ -26,6 +29,8 @@ public class DoubleDoor : MonoBehaviour, Iinteractable
 
     void OnTriggerExit(Collider other)
     {
+        if (!openWithInteraction) return;
+
         if (other.CompareTag("Player"))
         {
             other.GetComponent<InteractionManager>().UnsubscribeListener(this);
@@ -34,14 +39,20 @@ public class DoubleDoor : MonoBehaviour, Iinteractable
         }
     }
 
+    // se abre cuando Vera aprieta Space
     public void Interact()
+    {
+        if (promptUI != null) promptUI.SetActive(false);
+        Open();
+    }
+
+    // se abre desde otro script (por ejemplo, el puzzle)
+    public void Open()
     {
         if (isOpen) return; // si ya está abierta, no hace nada
         isOpen = true;
 
-        if (promptUI != null) promptUI.SetActive(false);
         if (openSfx != null) openSfx.Play();
-
         StartCoroutine(OpenRoutine());
     }
 
