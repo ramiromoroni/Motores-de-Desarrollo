@@ -53,7 +53,7 @@ public class AdaptiveMusicManager : MonoBehaviour
         detectionSource.playOnAwake = false;
         pursuitSource.playOnAwake = false;
 
-        explorationSource.volume = 1f;
+        explorationSource.volume = 0.5f;
         detectionSource.volume = 0f;
         pursuitSource.volume = 0f;
 
@@ -177,28 +177,28 @@ public class AdaptiveMusicManager : MonoBehaviour
 
             explorationSource.volume = Mathf.Lerp(
                 startExploration,
-                target == explorationSource ? 1f : 0f,
+                target == explorationSource ? 0.5f : 0f,
                 t
             );
 
             detectionSource.volume = Mathf.Lerp(
                 startDetection,
-                target == detectionSource ? 1f : 0f,
+                target == detectionSource ? 0.5f : 0f,
                 t
             );
 
             pursuitSource.volume = Mathf.Lerp(
                 startPursuit,
-                target == pursuitSource ? 1f : 0f,
+                target == pursuitSource ? 0.5f : 0f,
                 t
             );
 
             yield return null;
         }
 
-        explorationSource.volume = target == explorationSource ? 1f : 0f;
-        detectionSource.volume = target == detectionSource ? 1f : 0f;
-        pursuitSource.volume = target == pursuitSource ? 1f : 0f;
+        explorationSource.volume = target == explorationSource ? 0.5f : 0f;
+        detectionSource.volume = target == detectionSource ? 0.5f : 0f;
+        pursuitSource.volume = target == pursuitSource ? 0.5f : 0f;
 
         fadeCoroutine = null;
     }

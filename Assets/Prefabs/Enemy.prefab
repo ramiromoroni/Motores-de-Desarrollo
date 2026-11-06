@@ -1361,6 +1361,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   currentWaypoint: {fileID: 0}
   attackEvent:
     m_PersistentCalls:
