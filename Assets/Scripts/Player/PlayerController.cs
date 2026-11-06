@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 playerVelocity;
     private bool groundedPlayer;
 
-
+   
 
 
     // Referencia a la cámara para que el movimiento sea relativo a ella
@@ -114,12 +114,12 @@ public class PlayerController : MonoBehaviour
             controller.Move(moveDirection.normalized * currentSpeed * Time.deltaTime);
             if (isRunning) actions.Run();
             else actions.Walk();
-
+     
 
         }
         else
         {
-            actions.Stay();
+            actions.Stay();  
         }
 
 
@@ -128,6 +128,6 @@ public class PlayerController : MonoBehaviour
         controller.Move(playerVelocity * Time.deltaTime);
     }
 
-
+  
 
 }

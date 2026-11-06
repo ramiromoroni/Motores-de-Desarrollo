@@ -145,7 +145,6 @@ public class EnemyController : MonoBehaviour
 
                 EndDirectPursuit();
                 currentState = EnemyState.Idle;
-                FindNearestWaypoint();
                 playerGO = null;
                 thisAnimator.SetBool("Running", false);
             }
@@ -176,7 +175,6 @@ public class EnemyController : MonoBehaviour
 
                     goingToAlertPosition = false;
                     currentState = EnemyState.Idle;
-                    FindNearestWaypoint();
                 }
             }
             else
@@ -186,7 +184,6 @@ public class EnemyController : MonoBehaviour
 
                 goingToAlertPosition = false;
                 currentState = EnemyState.Idle;
-                FindNearestWaypoint();
                 thisAnimator.SetBool("Running", false);
             }
 
@@ -217,23 +214,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    void FindNearestWaypoint()
-    {
-        float closestDistance = Mathf.Infinity;
-        int closestIndex = 0;
 
-        for (int i = 0; i < waypoints.Count; i++)
-        {
-            float distance = Vector3.Distance(transform.position, waypoints[i].position);
-            if (distance < closestDistance)
-            {
-                closestDistance = distance;
-                closestIndex = i;
-            }
-        }
-
-        waypointIndex = closestIndex;
-    }
     //// Permite que una cámara de seguridad alerte al enemigo de la posición del jugador
     public void AlertAtPosition(Vector3 position)
     {
