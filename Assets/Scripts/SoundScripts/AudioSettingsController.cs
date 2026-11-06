@@ -20,13 +20,11 @@ public class AudioSettingsController : MonoBehaviour
     private void Start()
     {
         Debug.Log("AudioSettingsController: START ejecutado");
-        //// Configurar slider de música
         if (musicSlider != null)
         {
             musicSlider.minValue = 0f;
             musicSlider.maxValue = 1f;
-            ////Alguien que tenga mas fuerza de voluntad que yo y que arregle la continuidad del volumen
-            ////No tengo idea de que es lo que resetea el volumen del menu de pausa a 1
+
             float savedMusic = PlayerPrefs.GetFloat("MusicVolume", 1f);
             Debug.Log("LEVEL1 - Music guardado: " + PlayerPrefs.GetFloat("MusicVolume", -1f));
 
@@ -36,8 +34,6 @@ public class AudioSettingsController : MonoBehaviour
 
 
         }
-
-        //// Configurar slider de efectos
         if (sfxSlider != null)
         {
             sfxSlider.minValue = 0f;
@@ -108,5 +104,3 @@ public class AudioSettingsController : MonoBehaviour
         );
     }
 }
-
-////Peleando como boluda con el audiomixer y resulta que habia asignado algo mal yo
