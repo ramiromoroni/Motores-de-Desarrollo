@@ -7,7 +7,6 @@ public class EnemyVoiceEmitter : MonoBehaviour
     //Almacen de lineas de voz
     [SerializeField] private StoredLines voiceData;
 
-    private AudioSource _audioSource;
 
     [SerializeField] private AudioSource voiceSource;
 

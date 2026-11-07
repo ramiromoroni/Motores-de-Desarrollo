@@ -137,7 +137,7 @@ MonoBehaviour:
     m_Bits: 64
   gameSceneManager: {fileID: 0}
   musicManager: {fileID: 0}
-  detectSfx: {fileID: 3230129719544534034}
+  detectSfx: {fileID: 0}
 --- !u!82 &3230129719544534034
 AudioSource:
   m_ObjectHideFlags: 0
@@ -244,7 +244,7 @@ AudioSource:
   m_GameObject: {fileID: 1433853309576277482}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -6645669531014233989, guid: 3bb42cf103946954cbdd58b9f905901a, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 25dc694a07f9a6c4881182eb3409bd93, type: 3}
   m_PlayOnAwake: 1

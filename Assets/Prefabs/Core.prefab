@@ -75,6 +75,7 @@ MonoBehaviour:
   disabledModel: {fileID: 2356239950127534831}
   disableSfx: {fileID: 7113149334368004769}
   disableParticles: {fileID: 0}
+  idleLoop: {fileID: 0}
 --- !u!65 &5830705895249920267
 BoxCollider:
   m_ObjectHideFlags: 0
