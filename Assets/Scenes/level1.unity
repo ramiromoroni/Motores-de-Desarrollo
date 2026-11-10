@@ -47738,6 +47738,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -5696119328133206819, guid: 17835fd7938593b45a60ee889ee9daa9, type: 3}
+      propertyPath: voiceSource
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1759068135048172939, guid: 17835fd7938593b45a60ee889ee9daa9, type: 3}
+      propertyPath: stepsSource
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1888897815129680009, guid: 17835fd7938593b45a60ee889ee9daa9, type: 3}
+      propertyPath: stepsSource
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3216563078054030850, guid: 17835fd7938593b45a60ee889ee9daa9, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 5226999513116481818, guid: 3bb42cf103946954cbdd58b9f905901a, type: 2}
     - target: {fileID: 6203931253389430058, guid: 17835fd7938593b45a60ee889ee9daa9, type: 3}
       propertyPath: 'waypoints.Array.data[0]'
       value: 
