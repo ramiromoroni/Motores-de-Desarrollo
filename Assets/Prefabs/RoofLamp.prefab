@@ -28,7 +28,7 @@ Transform:
   m_GameObject: {fileID: 1360863799938464242}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.547531, y: -6.9654007, z: 7.238291}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.31781462, y: 6.876594, z: 0.31658226}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -141,7 +141,7 @@ Transform:
   m_GameObject: {fileID: 5676183576585067537}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -11.474991, y: -14.9254, z: 7.41329}
+  m_LocalPosition: {x: 0, y: -7.647, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -157,9 +157,9 @@ Light:
   m_Enabled: 1
   serializedVersion: 12
   m_Type: 2
-  m_Color: {r: 0.6415094, g: 0.6179303, b: 0.41456032, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 20
-  m_Range: 100
+  m_Range: 15
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize2D: {x: 0.5, y: 0.5}
@@ -200,8 +200,8 @@ Light:
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
-  m_ColorTemperature: 2156
+  m_BounceIntensity: 0
+  m_ColorTemperature: 4276
   m_UseColorTemperature: 1
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
   m_UseBoundingSphereOverride: 0
@@ -301,15 +301,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c861df88878a8ca4f93e4b8ee0824f07, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -11.51799
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c861df88878a8ca4f93e4b8ee0824f07, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -14.5604
+      value: -7.647
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c861df88878a8ca4f93e4b8ee0824f07, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.25329
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: c861df88878a8ca4f93e4b8ee0824f07, type: 3}
       propertyPath: m_LocalRotation.w
