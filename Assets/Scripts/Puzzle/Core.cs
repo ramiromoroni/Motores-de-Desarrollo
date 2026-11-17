@@ -8,7 +8,7 @@ public class Core : MonoBehaviour, Iinteractable
     [SerializeField] AudioSource disableSfx;          // sonido (opcional)
     [SerializeField] ParticleSystem disableParticles; // partículas (opcional)
     [SerializeField] AudioSource idleLoop;            //el sonido que va en loop
-
+    [SerializeField] Light thislight;
     private bool isDisabled = false;
 
     void OnTriggerEnter(Collider other)
@@ -33,9 +33,9 @@ public class Core : MonoBehaviour, Iinteractable
         if (disableSfx != null) disableSfx.Play();
         if (disableParticles != null) disableParticles.Play();
         if (idleLoop != null) idleLoop.Stop();                    // detiene el loop
-
+        if (thislight != null) thislight.color = Color.green;         // apaga la luz
         puzzle.CoreDisabled(); // le avisa al puzzle
     }
 
-  
+
 }

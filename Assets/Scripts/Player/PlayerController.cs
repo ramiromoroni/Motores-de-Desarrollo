@@ -8,10 +8,6 @@ public class PlayerController : MonoBehaviour
     private Vector2 moveInput;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
-
-   
-
-
     // Referencia a la cámara para que el movimiento sea relativo a ella
     private Transform cameraTransform;
 
@@ -102,10 +98,9 @@ public class PlayerController : MonoBehaviour
         // Solo rotamos y movemos si estamos apretando teclas
         if (inputDirection.magnitude >= 0.1f)
         {
-            //  Calculamos hacia dónde debe mirar según la cámara
+
             float targetAngle = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + cameraTransform.eulerAngles.y;
 
-            //  Rotamos al personaje suavemente
             Quaternion targetRotation = Quaternion.Euler(0f, targetAngle, 0f);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
 
@@ -114,12 +109,11 @@ public class PlayerController : MonoBehaviour
             controller.Move(moveDirection.normalized * currentSpeed * Time.deltaTime);
             if (isRunning) actions.Run();
             else actions.Walk();
-     
 
         }
         else
         {
-            actions.Stay();  
+            actions.Stay();
         }
 
 
@@ -128,6 +122,6 @@ public class PlayerController : MonoBehaviour
         controller.Move(playerVelocity * Time.deltaTime);
     }
 
-  
+
 
 }

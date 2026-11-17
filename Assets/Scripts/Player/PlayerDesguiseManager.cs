@@ -18,7 +18,7 @@ public class PlayerDesguiseManager : MonoBehaviour
 
     [SerializeField] private GameObject desguiseChassis;
     [SerializeField] private SkinnedMeshRenderer desguiseRenderer;
-    float maxDesguiseDuration = 5f;
+    float maxDesguiseDuration = 10f;
     float desguiseDuration;
 
     void Awake()
