@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     private bool groundedPlayer;
     // Referencia a la cámara para que el movimiento sea relativo a ella
     private Transform cameraTransform;
-
+    [SerializeField] private Transform cameraTarget;
     [Header("Configuración de Velocidades")]
     [SerializeField] private float walkSpeed = 5.0f;
     [SerializeField] private float runSpeed = 8.0f;
@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
 
             Quaternion targetRotation = Quaternion.Euler(0f, targetAngle, 0f);
             transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-
+            cameraTarget.rotation = transform.rotation; // Asegura que la cámara siga la rotación del jugador
             // Movemos al personaje en esa dirección usando la velocidad actual
             Vector3 moveDirection = Quaternion.Euler(0f, targetAngle, 0f) * Vector3.forward;
             controller.Move(moveDirection.normalized * currentSpeed * Time.deltaTime);

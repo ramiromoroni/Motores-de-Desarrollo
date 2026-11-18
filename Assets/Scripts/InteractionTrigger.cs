@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.InputSystem;
@@ -5,7 +6,7 @@ using UnityEngine.InputSystem;
 public class InteractionTrigger : MonoBehaviour
 {
     [Header("Referencia al cartel en la UI")]
-    public GameObject interactPrompt;
+    public TextMeshProUGUI interactPrompt;
 
     [Header("Evento a Ejecutar")]
     public UnityEvent alInteractuar;
@@ -14,10 +15,7 @@ public class InteractionTrigger : MonoBehaviour
 
     void Start()
     {
-        if (interactPrompt != null)
-        {
-            interactPrompt.SetActive(false);
-        }
+
     }
 
     void Update()
@@ -38,7 +36,8 @@ public class InteractionTrigger : MonoBehaviour
             isPlayerInside = true;
             if (interactPrompt != null)
             {
-                interactPrompt.SetActive(true);
+                interactPrompt.text = "[Presiona Espacio para interactuar]";
+                interactPrompt.gameObject.SetActive(true);
             }
         }
     }
@@ -50,7 +49,7 @@ public class InteractionTrigger : MonoBehaviour
             isPlayerInside = false;
             if (interactPrompt != null)
             {
-                interactPrompt.SetActive(false);
+                interactPrompt.gameObject.SetActive(false);
             }
         }
     }
@@ -63,7 +62,7 @@ public class InteractionTrigger : MonoBehaviour
 
         if (interactPrompt != null)
         {
-            interactPrompt.SetActive(false);
+            interactPrompt.gameObject.SetActive(false);
         }
 
         alInteractuar?.Invoke();

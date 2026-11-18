@@ -201,10 +201,10 @@ public class EnemyController : MonoBehaviour
             if (Vector3.Distance(transform.position, currentWaypoint.position) < 1.5f)
             {
                 waypointIndex = (waypointIndex + 1) % waypoints.Count;
-                Debug.Log("Llegó al waypoint: " + waypointIndex);
+                //Debug.Log("Llegó al waypoint: " + waypointIndex);
 
                 currentWaypoint = waypoints[waypointIndex];
-                Debug.Log("Ahora va al waypoint: " + waypointIndex);
+                //Debug.Log("Ahora va al waypoint: " + waypointIndex);
             }
             Vector3 directionToWaypoint = (currentWaypoint.position - transform.position).normalized;
             Vector3 vector3ToWaypoint = new Vector3(directionToWaypoint.x, 0, directionToWaypoint.z).normalized;
@@ -236,7 +236,7 @@ public class EnemyController : MonoBehaviour
         //// Ya no necesita perseguir directamente al jugador
         playerGO = null;
 
-        Debug.Log(gameObject.name + " fue alertado de la posición del jugador.");
+        //Debug.Log(gameObject.name + " fue alertado de la posición del jugador.");
     }
 
     void OnCollisionEnter(Collision collision)

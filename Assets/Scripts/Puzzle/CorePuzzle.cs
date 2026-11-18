@@ -21,6 +21,7 @@ public class CorePuzzle : MonoBehaviour
 
     public void CoreDisabled()
     {
+        counterText.gameObject.SetActive(true);
         disabledCores++;
         UpdateCounter();
 

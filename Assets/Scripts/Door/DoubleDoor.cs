@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class DoubleDoor : MonoBehaviour, Iinteractable
@@ -9,21 +10,29 @@ public class DoubleDoor : MonoBehaviour, Iinteractable
     [SerializeField] float slideDistance = 1f;               // cuánto se mete cada hoja
     [SerializeField] float openDuration = 1.5f;              // cuánto tarda en abrirse
     [SerializeField] AudioSource openSfx;                    // sonido de la puerta (opcional)
-    [SerializeField] GameObject promptUI;                    // cartel "Press SPACE..." (opcional)
+    [SerializeField] TextMeshProUGUI promptUI;                    // cartel "Press SPACE..." (opcional)
     [SerializeField] bool openWithInteraction = true;        // false = solo la abre el puzzle
 
     private bool isOpen = false;
 
     void OnTriggerEnter(Collider other)
     {
-        if (!openWithInteraction) return; // si es la salida del puzzle, Space no hace nada
-
         if (other.CompareTag("Player"))
         {
+            if (!openWithInteraction)
+            {
+                promptUI.text = "[Esta puerta podría abrirse con la energía necesaria...]";
+                promptUI.gameObject.SetActive(true);
+                return; // si es la salida del puzzle, Space no hace nada
+            }
             other.GetComponent<InteractionManager>().SubscribeListener(this);
 
             // mostramos el cartel solo si todavía está cerrada
-            if (promptUI != null && !isOpen) promptUI.SetActive(true);
+            if (promptUI != null && !isOpen)
+            {
+                promptUI.text = "[Presiona SPACE para abrir la puerta]";
+                promptUI.gameObject.SetActive(true);
+            }
         }
     }
 
@@ -35,14 +44,14 @@ public class DoubleDoor : MonoBehaviour, Iinteractable
         {
             other.GetComponent<InteractionManager>().UnsubscribeListener(this);
 
-            if (promptUI != null) promptUI.SetActive(false);
+            if (promptUI != null) promptUI.gameObject.SetActive(false);
         }
     }
 
     // se abre cuando Vera aprieta Space
     public void Interact()
     {
-        if (promptUI != null) promptUI.SetActive(false);
+        if (promptUI != null) promptUI.gameObject.SetActive(false);
         Open();
     }
 
