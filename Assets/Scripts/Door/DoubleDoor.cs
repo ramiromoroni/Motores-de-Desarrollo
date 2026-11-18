@@ -19,32 +19,25 @@ public class DoubleDoor : MonoBehaviour, Iinteractable
     {
         if (other.CompareTag("Player"))
         {
-            if (!openWithInteraction)
-            {
-                promptUI.text = "[Esta puerta podría abrirse con la energía necesaria...]";
-                promptUI.gameObject.SetActive(true);
-                return; // si es la salida del puzzle, Space no hace nada
-            }
-            other.GetComponent<InteractionManager>().SubscribeListener(this);
-
             // mostramos el cartel solo si todavía está cerrada
             if (promptUI != null && !isOpen)
             {
-                promptUI.text = "[Presiona SPACE para abrir la puerta]";
+                promptUI.text = "[Esta puerta podría abrirse con la energía necesaria...]";
                 promptUI.gameObject.SetActive(true);
             }
+            if (!openWithInteraction) return; // si es la salida del puzzle, Space no hace nada
+            other.GetComponent<InteractionManager>().SubscribeListener(this);
         }
     }
 
     void OnTriggerExit(Collider other)
     {
+        if (promptUI != null) promptUI.gameObject.SetActive(false);
         if (!openWithInteraction) return;
 
         if (other.CompareTag("Player"))
         {
             other.GetComponent<InteractionManager>().UnsubscribeListener(this);
-
-            if (promptUI != null) promptUI.gameObject.SetActive(false);
         }
     }
 

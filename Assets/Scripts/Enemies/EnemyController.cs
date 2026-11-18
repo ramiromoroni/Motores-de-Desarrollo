@@ -86,7 +86,7 @@ public class EnemyController : MonoBehaviour
         {
             playerGO = collider.GetComponent<PlayerDesguiseManager>();
 
-            if (playerGO.currentDesguise != DesguiseType.Desguise && CanSeePlayer())
+            if (playerGO.currentDesguise != DesguiseType.Desguise && playerGO.currentDesguise != DesguiseType.Degrading && CanSeePlayer())
             {
                 if (!directPursuitActive)
                 {

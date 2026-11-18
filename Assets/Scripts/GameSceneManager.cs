@@ -10,12 +10,12 @@ public class GameSceneManager : MonoBehaviour
 
     public void LoadLevel1()
     {
-        SceneManager.LoadScene("level1");
+        SceneManager.LoadScene("NewLevel1");
     }
 
     //public void LoadGameOver()
     //{
-     //   SceneManager.LoadScene("GameOver");
+    //   SceneManager.LoadScene("GameOver");
     //}
 
     public void LoadVictory()

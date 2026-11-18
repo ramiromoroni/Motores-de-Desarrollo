@@ -34,11 +34,13 @@ public class Desguise : MonoBehaviour, Iinteractable
     }
     public void Interact()
     {
+        Debug.Log("Player interacted with Desguise, remaining uses: " + uses);
 
         if (uses > 0)
         {
             desguiseEvent.Invoke();
             uses--;
+            Debug.Log("Desguise used, remaining uses: " + uses);
         }
         else
         {

@@ -14,7 +14,7 @@ public class KeycardDoorTrigger : MonoBehaviour
     private void Update()
     {
         // Si Vera está cerca y presiona Espacio
-        if (isPlayerNearby && Input.GetKeyDown(KeyCode.Space))
+        if (isPlayerNearby)
         {
             TryOpen();
         }

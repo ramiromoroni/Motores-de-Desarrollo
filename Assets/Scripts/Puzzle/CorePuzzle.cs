@@ -31,7 +31,7 @@ public class CorePuzzle : MonoBehaviour
     void UpdateCounter()
     {
         if (counterText != null)
-            counterText.text = "Cores disabled: " + disabledCores + "/" + totalCores;
+            counterText.text = "Nucleos desactivados: " + disabledCores;
     }
 
     // muestra la salida abriéndose y vuelve a Vera

@@ -1,15 +1,20 @@
+using TMPro;
 using UnityEngine;
 
 public class ShowMessageOnApproach : MonoBehaviour
 {
-    [SerializeField] private GameObject messageUI; // El cartel "Puerta trabada"
+    [SerializeField] TextMeshProUGUI messageUI; // El cartel "Puerta trabada"
 
     private void OnTriggerEnter(Collider other)
     {
         // Detecta si es Vera / el jugador
         if (other.CompareTag("Player"))
         {
-            if (messageUI != null) messageUI.SetActive(true);
+            if (messageUI != null)
+            {
+                messageUI.text = "Tal vez con una tarjeta de acceso pueda abrirse...";
+                messageUI.gameObject.SetActive(true);
+            }
         }
     }
 
@@ -18,7 +23,7 @@ public class ShowMessageOnApproach : MonoBehaviour
         // Lo oculta al alejarse
         if (other.CompareTag("Player"))
         {
-            if (messageUI != null) messageUI.SetActive(false);
+            if (messageUI != null) messageUI.gameObject.SetActive(false);
         }
     }
 }

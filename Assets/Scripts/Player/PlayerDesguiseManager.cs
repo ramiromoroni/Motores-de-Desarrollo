@@ -35,6 +35,7 @@ public class PlayerDesguiseManager : MonoBehaviour
     }
     public void SetDesguiseOn()
     {
+        Debug.Log("Desguise activated");
         currentDesguise = DesguiseType.Desguise;
         desguiseDuration = maxDesguiseDuration;
     }
